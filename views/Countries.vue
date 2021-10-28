@@ -63,7 +63,10 @@ export default {
   methods: {
     search()
     {
-      this.$store.dispatch('searchCountries', this.searchTerm);
+      this.$store.dispatch('searchCountries', this.searchTerm)
+      .then(() => {
+        this.changePage(1);
+      });
     },
     handleAdd(index, row)
     {

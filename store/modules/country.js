@@ -10,8 +10,14 @@ const actions = {
         commit('setCountries', countries)
     },
     async searchCountries({ commit }, searchTerm) {
-        let results = await RestCountries.searchCountries(searchTerm);
-        commit('setCountries', results);
+        if(searchTerm == "")
+        {
+            let countries = await RestCountries.getCountries();
+            commit('setCountries', countries)
+        }else{
+            let results = await RestCountries.searchCountries(searchTerm);
+            commit('setCountries', results);
+        }
     }
 }
 
