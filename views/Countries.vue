@@ -19,6 +19,16 @@
     </el-table-column>
     <el-table-column label="Name" prop="name.common" />
     <el-table-column label="Region" prop="region" />
+    <el-table-column label="Actions">
+      <template #default="props">
+          <el-button
+            size="mini"
+            @click="handleAdd(props.$index, props.row)">
+            Add to List
+          </el-button>
+      </template>
+
+    </el-table-column>
   </el-table>
 </template>
 
@@ -43,6 +53,10 @@ export default {
     {
       this.$store.dispatch('searchCountries', this.searchTerm);
     },
+    handleAdd(index, row)
+    {
+      this.$store.dispatch('addCountryToMyList', row);
+    }
   }
 }
 </script>

@@ -4,12 +4,6 @@ const state = () => ({
     countries: []
   })
 
-const getters = {
-    getCountry: (state) => (id)=> {
-        return state.countries.find(country=>country.id==id);
-    }
-}
-
 const actions = {
     async getCountries ({ commit }) {
         let allCountries = await RestCountries.getCountries();
@@ -32,7 +26,6 @@ const mutations = {
 const country = {
     name: "country",
     state,
-    getters,
     actions,
     mutations
 }
