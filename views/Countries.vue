@@ -1,7 +1,7 @@
 <template>
   <el-form :inline="true" class="form-inline" style="text-align: left; margin-top: 10px">
     <el-form-item>
-      <el-input v-model="searchTerm" placeholder="Country Name"></el-input>
+      <el-input v-model="searchTerm" @keyup.enter="search" placeholder="Country Name"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="search">Search</el-button>
