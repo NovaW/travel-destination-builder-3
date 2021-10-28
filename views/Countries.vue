@@ -27,7 +27,6 @@
             Add to List
           </el-button>
       </template>
-
     </el-table-column>
   </el-table>
 </template>
