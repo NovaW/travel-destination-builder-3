@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="myList" style="width: 50%">
+  <el-table :data="currentPage" style="width: 50%">
     <el-table-column type="expand">
       <template #default="props">
         <p>Region: {{ props.row.region }}</p>
@@ -22,6 +22,9 @@
       </template>
     </el-table-column>
   </el-table>
+  <div class="block">
+    <el-pagination @current-change="changePage" layout="prev, pager, next" :total="myList.length" style="text-align: left"></el-pagination>
+  </div>
 </template>
 
 <script>
@@ -29,13 +32,26 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'MyList',
+  data() {
+    return {
+        currentPage: [],
+        pageSize: 10,
+    };
+  },
   computed: mapState({
       myList: state => state.mylist.mylist,
   }),
+  created () {
+    this.currentPage = this.myList.slice(0, this.pageSize);
+  },
   methods: {
     handleRemove(index, row)
     {
       this.$store.dispatch('removeCountryFromMyList', row);
+    },
+    changePage(pageNumber)
+    {
+      this.currentPage = this.myList.slice((pageNumber - 1) * this.pageSize, pageNumber * this.pageSize);
     }
   }
 }

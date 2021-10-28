@@ -7,7 +7,7 @@
       <el-button type="primary" @click="search">Search</el-button>
     </el-form-item>
   </el-form>
-  <el-table :data="countryList" style="width: 50%">
+  <el-table :data="currentPage" style="width: 50%">
     <el-table-column type="expand">
       <template #default="props">
         <p>Region: {{ props.row.region }}</p>
@@ -29,6 +29,9 @@
       </template>
     </el-table-column>
   </el-table>
+  <div class="block">
+    <el-pagination @current-change="changePage" layout="prev, pager, next" :total="countryList.length" style="text-align: left"></el-pagination>
+  </div>
 </template>
 
 <script>
@@ -38,14 +41,18 @@ export default {
   name: 'Countries',
   data() {
       return {
-        searchTerm: ""
+        searchTerm: "",
+        currentPage: [],
+        pageSize: 10,
       };
   },
   computed: mapState({
-      countryList: state => state.country.countries,
+    countryList: state => state.country.countries,
   }),
   created () {
-    this.$store.dispatch('getCountries');
+    this.$store.dispatch('getCountries').then(() => {
+      this.currentPage = this.countryList.slice(0, this.pageSize);  
+    });
   },
   methods: {
     search()
@@ -55,6 +62,10 @@ export default {
     handleAdd(index, row)
     {
       this.$store.dispatch('addCountryToMyList', row);
+    },
+    changePage(pageNumber)
+    {
+      this.currentPage = this.countryList.slice((pageNumber - 1) * this.pageSize, pageNumber * this.pageSize);
     }
   }
 }

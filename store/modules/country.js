@@ -6,13 +6,11 @@ const state = () => ({
 
 const actions = {
     async getCountries ({ commit }) {
-        let allCountries = await RestCountries.getCountries();
-        let countries = allCountries.slice(0,10);
+        let countries = await RestCountries.getCountries();
         commit('setCountries', countries)
     },
     async searchCountries({ commit }, searchTerm) {
-        let allResults = await RestCountries.searchCountries(searchTerm);
-        let results = allResults.slice(0,10);
+        let results = await RestCountries.searchCountries(searchTerm);
         commit('setCountries', results);
     }
 }
