@@ -1,24 +1,31 @@
-const state = () => ({
-    allCountries: []
-  })
+import RestCountries from "../../api/RestCountries";
 
+const state = () => ({
+    countries: []
+  })
 
 const getters = {
     getCountry: (state) => (id)=> {
-        return state.allCountries.find(country=>country.id==id);
+        return state.countries.find(country=>country.id==id);
     }
 }
 
 const actions = {
-    async getAllCountries ({ commit }) {
-        var countries = ["countryA", "countryB", "countryC"];
+    async getCountries ({ commit }) {
+        let allCountries = await RestCountries.getCountries();
+        let countries = allCountries.slice(0,10);
         commit('setCountries', countries)
     },
+    async searchCountries({ commit }, searchTerm) {
+        let allResults = await RestCountries.searchCountries(searchTerm);
+        let results = allResults.slice(0,10);
+        commit('setCountries', results);
+    }
 }
 
 const mutations = {
     setCountries (state, countries) {
-        state.allCountries = countries
+        state.countries = countries
       },
 }
 
