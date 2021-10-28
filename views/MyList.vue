@@ -36,6 +36,7 @@ export default {
     return {
         currentPage: [],
         pageSize: 10,
+        pageNumber: 1,
     };
   },
   computed: mapState({
@@ -47,10 +48,13 @@ export default {
   methods: {
     handleRemove(index, row)
     {
-      this.$store.dispatch('removeCountryFromMyList', row);
+      this.$store.dispatch('removeCountryFromMyList', row).then(() => {
+        this.changePage(this.pageNumber);
+      });
     },
     changePage(pageNumber)
     {
+      this.pageNumber = pageNumber;
       this.currentPage = this.myList.slice((pageNumber - 1) * this.pageSize, pageNumber * this.pageSize);
     }
   }

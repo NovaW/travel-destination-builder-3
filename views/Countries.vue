@@ -49,10 +49,16 @@ export default {
   computed: mapState({
     countryList: state => state.country.countries,
   }),
-  created () {
-    this.$store.dispatch('getCountries').then(() => {
-      this.currentPage = this.countryList.slice(0, this.pageSize);  
-    });
+  mounted () {
+    if(this.countryList.length === 0)
+    {
+      this.$store.dispatch('getCountries').then(() => {
+        this.currentPage = this.countryList.slice(0, this.pageSize);  
+      });
+    }else
+    {
+      this.currentPage = this.countryList.slice(0, this.pageSize); 
+    }
   },
   methods: {
     search()
