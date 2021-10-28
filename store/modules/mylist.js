@@ -14,6 +14,7 @@ const actions = {
 const mutations = {
     addCountryToMyList(state, country) {
         state.mylist.push(country);
+        state.mylist = [...new Set(state.mylist)];
     },
     removeCountryFromMyList(state, country) {
         state.mylist = state.mylist.filter(c => c.name !== country.name);
