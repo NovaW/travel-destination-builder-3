@@ -7,7 +7,7 @@
       <el-button type="primary" @click="search">Search</el-button>
     </el-form-item>
   </el-form>
-  <el-table :data="currentPage" style="width: 50%">
+  <el-table :data="currentPage" style="max-width: 800px">
     <el-table-column type="expand">
       <template #default="props">
         <p>Region: {{ props.row.region }}</p>
@@ -53,11 +53,11 @@ export default {
     if(this.countryList.length === 0)
     {
       this.$store.dispatch('getCountries').then(() => {
-        this.currentPage = this.countryList.slice(0, this.pageSize);  
+        this.changePage(1);
       });
     }else
     {
-      this.currentPage = this.countryList.slice(0, this.pageSize); 
+      this.changePage(1);
     }
   },
   methods: {

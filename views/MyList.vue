@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="currentPage" style="width: 50%">
+  <el-table :data="currentPage" style="max-width: 800px">
     <el-table-column type="expand">
       <template #default="props">
         <p>Region: {{ props.row.region }}</p>
@@ -43,7 +43,7 @@ export default {
       myList: state => state.mylist.mylist,
   }),
   created () {
-    this.currentPage = this.myList.slice(0, this.pageSize);
+    this.changePage(1);
   },
   methods: {
     handleRemove(index, row)
